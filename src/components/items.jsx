@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-
-export default function Items({item}) {
+export default function Items({item,handleAddToCart}) {
 
     
     return (
@@ -11,9 +9,14 @@ export default function Items({item}) {
                     <h5 className="card-title">{item.name}</h5>
                     {/* <p className="card-text">{item.details}</p> */}
                     <h6  className="card-text">{item.price}</h6>
-                    <a 
+                    <button 
+                    onClick={() => {
+                        
+                        handleAddToCart(item)
+                        
+                    }}
                         className="btn btn-outline-success"
-                        >Add To Cart</a>
+                        >Add To Cart</button>
                 </div>
             </div>
         

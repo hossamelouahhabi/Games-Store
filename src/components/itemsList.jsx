@@ -1,9 +1,9 @@
-import { gamesData } from "../Data"
+ 
 import Items from "./items"
 
-export default function ItemsList() {
-    const items = gamesData.map((item) => {
-        return <Items key={item.id} item={item} />
+export default function ItemsList({games,handleAddToCart}) {
+    const items = games.map((item) => {
+        return <Items key={item.id} item={item} handleAddToCart={handleAddToCart}/>
     })
     return(
         <div className="container my-5">
