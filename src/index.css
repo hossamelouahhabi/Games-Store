@@ -14,7 +14,7 @@ code {
 
 body {
   --sb-track-color: #232E33;
-  --sb-thumb-color: #6BAF8D;
+  --sb-thumb-color: #198754;
   --sb-size: 10px;
 
   scrollbar-color: var(--sb-thumb-color) 
@@ -27,11 +27,11 @@ body::-webkit-scrollbar {
 
 body::-webkit-scrollbar-track {
   background: var(--sb-track-color);
-  border-radius: 10px;
+  /* border-radius: 10px; */
 }
 
 body::-webkit-scrollbar-thumb {
   background: var(--sb-thumb-color);
   border-radius: 10px;
   
-  }
+  } 

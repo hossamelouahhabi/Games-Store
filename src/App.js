@@ -7,30 +7,53 @@ import { Routes, Route } from "react-router-dom";
 import Cart from "./components/Cart";
 import { StoreContext } from "./components/context/StoreContext";
 
-const defaultCart = () => {
-  let cart = {}
-  for(let i = 1; i < gamesData.length + 1; i++){
-    cart[i] = 0;
-  }
-  return cart;
-}
 
 function App() {
-  const [games, setGames] = useState(gamesData);
-  const [cartItems, setCartItems] = useState(defaultCart())
+  const [games] = useState(gamesData);
+  const [cartItems, setCartItems] = useState([])
 
-  const handleAddToCart = (ID) => {
-    setCartItems((prev) => ({...prev, [ID]: prev[ID] + 1}))
+  const handleAddToCart = (product) => {
+    const existingItem = cartItems.find((item) => item.id === product.id)
+    if(existingItem){
+      setCartItems(cartItems.map((item) => {
+        if(item.id === product.id){
+          return {...existingItem, quantity: existingItem.quantity + 1}
+        }else{
+          return item;
+        }
+      }))
+    }else{
+      setCartItems([...cartItems,{...product, quantity: 1}])
+    }
   }
 
-  const handleRemoveFromCart = (ID) => {
-    setCartItems((prev) => ({...prev, [ID]: prev[ID] - 1}))
+  const handleRemoveFromCart = (product) => {
+    const existingItem = cartItems.find((item) => item.id === product.id)
+    if(existingItem.quantity === 1){
+      // eslint-disable-next-line
+      setCartItems(cartItems.filter((item) => {
+        if(item.id  !== product.id) {
+          return item
+        }
+      }))
+    }else{
+      setCartItems(cartItems.map((item) => {
+        if(item.id  === product.id){
+          return {...existingItem, quantity: existingItem.quantity - 1}
+        }else{
+          return item
+        }
+      }))
+    }
   }
 
-  // console.log(cartItems);
+  const handleClearCart = () => {
+    setCartItems([])
+  }
+
   return (
     <div className="App">
-      <StoreContext.Provider value={{handleAddToCart, cartItems, handleRemoveFromCart}}>
+      <StoreContext.Provider value={{handleAddToCart, cartItems, handleRemoveFromCart,handleClearCart}}>
         <Navbar />
         <Routes>
           <Route path="/" element={<ItemsList games={games} />} />
